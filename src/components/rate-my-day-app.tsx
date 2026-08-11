@@ -5,8 +5,8 @@ import { friendlyDate, isoDate, MONTHS, daysInMonth } from "@/lib/dates";
 import type { DashboardData, DayEntry, Profile } from "@/lib/types";
 
 const SCORE_COLORS = [
-  "#ed3f35", "#ff7a1a", "#ff9d27", "#ffd85a", "#f7e8a7",
-  "#c4dca9", "#97c776", "#68a94e", "#3d7d30", "#1d5824",
+  "#ff0000", "#ff9900", "#fff2cc", "#ffd966", "#bf9000",
+  "#b6d7a8", "#6aa84f", "#38761d", "#274e13", "#00ff00",
 ];
 
 const TODAY = new Date();
@@ -189,7 +189,6 @@ export default function RateMyDayApp() {
           <DayEditor key={selectedDate} date={selectedDate} entry={data?.entries.find((item) => item.entry_date === selectedDate)} onSave={saveEntry} onDelete={deleteEntry} saving={saving} />
         </aside>
       </div>
-      <footer><span>1 — Worst</span><span>10 — Best</span><span>Made for your everyday.</span></footer>
     </main>
   );
 }
