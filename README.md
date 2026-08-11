@@ -35,6 +35,28 @@ A private, installable year-at-a-glance diary. Pick a 1–10 score for each day,
 
 The tables are created automatically the first time the app successfully opens. Use your access code on the first device, then add your name and optional birthday.
 
+## Import the existing Google Sheet
+
+The one-time importer preserves the source sheet's color ratings and comments. Add its sharing link to your local `.env.local`:
+
+```env
+IMPORT_SHEET_URL=https://docs.google.com/spreadsheets/d/your-sheet-id/edit?usp=sharing
+```
+
+Preview the import first (this does not change the database):
+
+```bash
+npm run import:sheet -- --dry-run
+```
+
+Then import the entries:
+
+```bash
+npm run import:sheet
+```
+
+The configured Rate My Day source sheet imports 178 rated dates from February through July 2026, including 162 comments. It maps the color guide to scores 1–10 and imports the three confirmed alternate light-green cells as score 6. Re-running it safely updates those same dates.
+
 ## Deploy to Vercel
 
 1. Put this folder in a GitHub repository and import that repository into Vercel.
