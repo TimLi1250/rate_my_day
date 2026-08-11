@@ -39,7 +39,7 @@ The tables are created automatically the first time the app successfully opens. 
 
 1. Put this folder in a GitHub repository and import that repository into Vercel.
 2. In the Vercel project, open **Marketplace**, install the **Neon** integration, create a database, and connect it to the project. Vercel adds the connection credentials as environment variables.
-3. In **Settings → Environment Variables**, add `RATE_MY_DAY_ACCESS_CODE` for Production, Preview, and Development. Use a long, private value.
+3. In [**Settings → Environment Variables**](https://vercel.com/dashboard), open your new project, then add `RATE_MY_DAY_ACCESS_CODE` for Production, Preview, and Development. Use a long, private value. Once the project exists, its direct URL will be `https://vercel.com/<your-team>/<your-project>/settings/environment-variables`.
 4. Deploy. Open the resulting URL and enter the same personal code to set up or access your diary.
 
 Do not expose the access code or commit `.env.local`. It is the lightweight protection for your personal diary; without it, anyone who discovers the site URL could attempt to read or change entries.
