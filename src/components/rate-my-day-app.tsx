@@ -27,6 +27,7 @@ export default function RateMyDayApp() {
   const [year, setYear] = useState(INITIAL_YEAR);
   const [data, setData] = useState<DashboardData | null>(null);
   const [selectedDate, setSelectedDate] = useState(isoDate(INITIAL_YEAR, TODAY.getMonth(), TODAY.getDate()));
+  const [notesMonth, setNotesMonth] = useState(TODAY.getMonth());
   const [error, setError] = useState("");
   const [loading, setLoading] = useState(true);
   const [saving, setSaving] = useState(false);
@@ -88,6 +89,11 @@ export default function RateMyDayApp() {
     if (selectedYear !== nextYear) {
       setSelectedDate(isoDate(nextYear, month - 1, Math.min(day, daysInMonth(nextYear, month - 1))));
     }
+  }
+
+  function selectDate(date: string) {
+    setSelectedDate(date);
+    setNotesMonth(Number(date.slice(5, 7)) - 1);
   }
 
   async function saveProfile(profile: Profile) {
@@ -177,7 +183,7 @@ export default function RateMyDayApp() {
       </section>
 
       <div className="tracker-layout">
-        <YearGrid year={year} entries={data?.entries ?? []} selectedDate={selectedDate} onSelect={setSelectedDate} />
+        <YearGrid year={year} entries={data?.entries ?? []} selectedDate={selectedDate} notesMonth={notesMonth} onSelect={selectDate} onNotesMonthChange={setNotesMonth} />
         <aside className="side-panel">
           <ScoreLegend />
           <DayEditor key={selectedDate} date={selectedDate} entry={data?.entries.find((item) => item.entry_date === selectedDate)} onSave={saveEntry} onDelete={deleteEntry} saving={saving} />
@@ -198,18 +204,20 @@ function Onboarding({ onSave, saving, error }: { onSave: (profile: Profile) => P
   return <main className="access-page"><section className="access-card onboarding-card"><p className="eyebrow">MAKE IT YOURS</p><h1>Before we begin…</h1><p className="intro">Let’s put your name on this little corner of the year.</p><form onSubmit={(event) => { event.preventDefault(); void onSave({ name, birthday: birthday || null }); }}><label htmlFor="name">What should we call you?</label><input id="name" value={name} onChange={(event) => setName(event.target.value)} placeholder="Your name" maxLength={80} required autoFocus /><label htmlFor="birthday">Birthday <span>(optional)</span></label><input id="birthday" type="date" value={birthday} onChange={(event) => setBirthday(event.target.value)} /><button className="primary-button" type="submit" disabled={saving}>{saving ? "Saving…" : "Start my year"} <span>→</span></button></form>{error && <p className="form-error">{error}</p>}</section></main>;
 }
 
-function YearGrid({ year, entries, selectedDate, onSelect }: { year: number; entries: DayEntry[]; selectedDate: string; onSelect: (date: string) => void }) {
+function YearGrid({ year, entries, selectedDate, notesMonth, onSelect, onNotesMonthChange }: { year: number; entries: DayEntry[]; selectedDate: string; notesMonth: number; onSelect: (date: string) => void; onNotesMonthChange: (month: number) => void }) {
   const entryByDate = useMemo(() => new Map(entries.map((entry) => [entry.entry_date, entry])), [entries]);
-  return <section className="year-card" aria-label={`${year} day ratings`}><div className="grid-and-notes"><div className="grid-column"><div className="grid-scroll"><div className="year-grid"><div className="corner-label">DAY</div>{MONTHS.map((month) => <div className="month-label" key={month}>{month.slice(0, 3)}</div>)}{Array.from({ length: 31 }, (_, index) => { const day = index + 1; return <DayRow key={day} day={day} year={year} entryByDate={entryByDate} selectedDate={selectedDate} onSelect={onSelect} />; })}</div></div><p className="grid-caption">Tap a colored square to revisit it.</p></div><YearNotes entries={entries} selectedDate={selectedDate} onSelect={onSelect} /></div></section>;
+  return <section className="year-card" aria-label={`${year} day ratings`}><div className="grid-and-notes"><div className="grid-column"><div className="grid-scroll"><div className="year-grid"><div className="corner-label">DAY</div>{MONTHS.map((month) => <div className="month-label" key={month}>{month.slice(0, 3)}</div>)}{Array.from({ length: 31 }, (_, index) => { const day = index + 1; return <DayRow key={day} day={day} year={year} entryByDate={entryByDate} selectedDate={selectedDate} onSelect={onSelect} />; })}</div></div><p className="grid-caption">Tap a colored square to revisit it.</p></div><YearNotes entries={entries} selectedDate={selectedDate} month={notesMonth} onSelect={onSelect} onMonthChange={onNotesMonthChange} /></div></section>;
 }
 
 function DayRow({ day, year, entryByDate, selectedDate, onSelect }: { day: number; year: number; entryByDate: Map<string, DayEntry>; selectedDate: string; onSelect: (date: string) => void }) {
   return <><span className="day-number">{day}</span>{MONTHS.map((month, monthIndex) => { const exists = day <= daysInMonth(year, monthIndex); if (!exists) return <span className="day-cell unavailable" aria-hidden="true" key={month} />; const date = isoDate(year, monthIndex, day); const entry = entryByDate.get(date); const selected = selectedDate === date; return <button key={month} className={`day-cell ${selected ? "selected" : ""} ${entry ? "rated" : ""}`} style={scoreStyle(entry?.score)} aria-label={`${friendlyDate(date)}${entry ? `, rated ${entry.score} out of 10` : ", not rated"}`} aria-pressed={selected} onClick={() => onSelect(date)} />; })}</>;
 }
 
-function YearNotes({ entries, selectedDate, onSelect }: { entries: DayEntry[]; selectedDate: string; onSelect: (date: string) => void }) {
-  const notes = entries.filter((entry) => entry.comment).sort((a, b) => a.entry_date.localeCompare(b.entry_date));
-  return <section className="year-notes" aria-label="Notes from your year"><div className="notes-heading"><div><p className="section-kicker">NOTES FROM YOUR YEAR</p><h2>Little memories</h2></div><span>{notes.length}</span></div>{notes.length === 0 ? <p className="empty-notes">When you add a note to a day, it will live here—right beside your year.</p> : <div className="notes-list">{notes.map((entry) => <button className={`note-row ${selectedDate === entry.entry_date ? "selected" : ""}`} key={entry.entry_date} onClick={() => onSelect(entry.entry_date)}><span className="note-dot" style={scoreStyle(entry.score)} /><span className="note-copy"><strong>{friendlyDate(entry.entry_date)}</strong><span>{entry.comment}</span></span></button>)}</div>}</section>;
+function YearNotes({ entries, selectedDate, month, onSelect, onMonthChange }: { entries: DayEntry[]; selectedDate: string; month: number; onSelect: (date: string) => void; onMonthChange: (month: number) => void }) {
+  const notes = entries.filter((entry) => entry.comment && Number(entry.entry_date.slice(5, 7)) === month + 1).sort((a, b) => a.entry_date.localeCompare(b.entry_date));
+  const previousMonth = () => onMonthChange((month + 11) % 12);
+  const nextMonth = () => onMonthChange((month + 1) % 12);
+  return <section className="year-notes" aria-label="Notes from your year"><div className="notes-heading"><div><p className="section-kicker">NOTES FROM YOUR YEAR</p><h2>Little memories</h2></div><span>{notes.length}</span></div><div className="notes-month-picker"><button aria-label={`Show ${MONTHS[(month + 11) % 12]} notes`} onClick={previousMonth}>←</button><strong>{MONTHS[month]}</strong><button aria-label={`Show ${MONTHS[(month + 1) % 12]} notes`} onClick={nextMonth}>→</button></div>{notes.length === 0 ? <p className="empty-notes">No notes for {MONTHS[month]} yet. Add one to give this month a memory.</p> : <div className="notes-list" key={month}>{notes.map((entry) => <button className={`note-row ${selectedDate === entry.entry_date ? "selected" : ""}`} key={entry.entry_date} onClick={() => onSelect(entry.entry_date)}><span className="note-dot" style={scoreStyle(entry.score)} /><span className="note-copy"><strong>{friendlyDate(entry.entry_date)}</strong><span>{entry.comment}</span></span></button>)}</div>}</section>;
 }
 
 function ScoreLegend() {

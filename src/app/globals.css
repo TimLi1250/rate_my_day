@@ -42,32 +42,36 @@ h1 { margin: 4px 0 0; font-size: clamp(2.3rem, 4.4vw, 4.35rem); font-weight: 500
 .tracker-layout { display: grid; grid-template-columns: minmax(0, 1fr) 330px; gap: 22px; align-items: start; }
 .year-card, .side-panel { border: 1px solid #dde3d3; border-radius: 16px; background: rgba(255, 254, 249, .94); box-shadow: 0 10px 30px rgba(61, 74, 45, .055); }
 .year-card { padding: 22px; }
-.grid-and-notes { display: grid; grid-template-columns: 252px minmax(210px, 1fr); gap: 24px; align-items: start; }
+.grid-and-notes { display: grid; grid-template-columns: 292px minmax(180px, 250px); gap: 27px; align-items: start; }
 .grid-scroll { padding: 2px; }
-.year-grid { display: grid; grid-template-columns: 24px repeat(12, 16px); gap: 2px; width: max-content; align-items: center; }
+.year-grid { display: grid; grid-template-columns: 26px repeat(12, 20px); gap: 2px; width: max-content; align-items: center; }
 .corner-label, .month-label { min-height: 20px; color: #7e8977; font-size: .5rem; font-weight: 800; letter-spacing: .08em; text-align: center; }
 .corner-label { text-align: right; padding-right: 4px; }
 .month-label { display: grid; place-items: center; }
 .day-number { padding-right: 5px; color: #97a190; font-size: .59rem; font-variant-numeric: tabular-nums; line-height: 1; text-align: right; }
-.day-cell { display: block; width: 16px; height: 16px; padding: 0; border: 1px solid #dce2d3; border-radius: 3px; color: rgba(29, 58, 35, .75); background: #fffefa; transition: transform .13s ease, box-shadow .13s ease; }
+.day-cell { display: block; width: 20px; height: 20px; padding: 0; border: 1px solid #dce2d3; border-radius: 3px; color: rgba(29, 58, 35, .75); background: #fffefa; transition: transform .13s ease, box-shadow .13s ease; }
 .day-cell:not(.unavailable):hover { transform: scale(1.12); box-shadow: 0 3px 8px rgba(21, 57, 29, .18); z-index: 1; }
 .day-cell.rated { border-color: transparent; }
 .day-cell.selected { outline: 2px solid #243f2b; outline-offset: 2px; z-index: 2; }
 .day-cell.unavailable { border-color: transparent; background: transparent; }
 .grid-caption { margin: 11px 0 0; color: #87917f; font-size: .7rem; line-height: 1.35; }
-.year-notes { min-width: 0; min-height: 585px; padding-left: 23px; border-left: 1px dashed #d9e0d2; }
+.year-notes { min-width: 0; min-height: 680px; padding-left: 20px; border-left: 1px dashed #d9e0d2; }
 .notes-heading { display: flex; align-items: start; justify-content: space-between; gap: 12px; padding: 1px 0 13px; border-bottom: 1px solid #e7ebe1; }
 .notes-heading h2 { margin: 5px 0 0; font-size: 1.32rem; font-weight: 500; letter-spacing: -.04em; }
 .notes-heading > span { display: grid; width: 24px; height: 24px; place-items: center; border-radius: 50%; color: #61745e; background: #edf4e7; font-size: .67rem; font-weight: 800; }
-.notes-list { max-height: 526px; overflow-y: auto; padding: 4px 7px 4px 0; scrollbar-color: #bfd1b6 transparent; scrollbar-width: thin; }
+.notes-month-picker { display: grid; grid-template-columns: 28px 1fr 28px; align-items: center; margin: 10px 0 6px; padding: 4px; border-radius: 8px; background: #f2f6ec; text-align: center; }
+.notes-month-picker strong { color: #425e43; font-family: Georgia, serif; font-size: .86rem; font-weight: 500; }
+.notes-month-picker button { width: 24px; height: 24px; place-self: center; border: 0; border-radius: 50%; color: #527353; background: transparent; font-size: .86rem; transition: background .15s; }
+.notes-month-picker button:hover { background: #dfead7; }
+.notes-list { max-height: 568px; overflow-y: auto; padding: 4px 7px 4px 0; scrollbar-color: #bfd1b6 transparent; scrollbar-width: thin; }
 .note-row { display: flex; width: 100%; gap: 9px; padding: 12px 4px; border: 0; border-bottom: 1px solid #edf0e9; color: inherit; background: transparent; text-align: left; }
 .note-row:hover, .note-row.selected { background: #f3f8ed; }
 .note-row.selected { margin-left: -5px; padding-left: 9px; border-radius: 7px; }
 .note-dot { display: block; flex: 0 0 auto; width: 9px; height: 9px; margin-top: 4px; border-radius: 50%; }
 .note-copy { display: grid; min-width: 0; gap: 3px; }
-.note-copy strong { color: #52654f; font-size: .7rem; }
-.note-copy span { display: -webkit-box; overflow: hidden; color: #7d8779; font-family: Georgia, serif; font-size: .79rem; line-height: 1.3; -webkit-box-orient: vertical; -webkit-line-clamp: 2; }
-.empty-notes { margin: 22px 0; color: #98a292; font-family: Georgia, serif; font-size: .92rem; font-style: italic; line-height: 1.5; }
+.note-copy strong { color: #476048; font-size: .73rem; font-weight: 800; }
+.note-copy span { display: -webkit-box; overflow: hidden; color: #304634; font-family: Georgia, serif; font-size: .92rem; font-weight: 600; letter-spacing: -.01em; line-height: 1.38; -webkit-box-orient: vertical; -webkit-line-clamp: 3; }
+.empty-notes { margin: 22px 0; color: #697d6b; font-family: Georgia, serif; font-size: .96rem; font-style: italic; line-height: 1.5; }
 .side-panel { overflow: hidden; }
 .legend { padding: 22px 22px 18px; border-bottom: 1px solid #e4e8de; }
 .legend-ends { display: flex; justify-content: space-between; margin: 12px 1px 6px; color: #788275; font-size: .68rem; }
@@ -86,8 +90,8 @@ legend, .comment-label { display: block; margin-bottom: 8px; color: #596754; fon
 .score-picker button.active { border-color: #1f4329; box-shadow: 0 0 0 2px #fffdf8, 0 0 0 4px #1f4329; transform: scale(1.04); }
 .comment-label span { color: #96a08f; font-size: .68rem; font-weight: 500; }
 textarea, input { width: 100%; border: 1px solid #d8dfd1; border-radius: 9px; color: #2c4431; background: #fffefa; }
-textarea { display: block; padding: 11px 12px; resize: vertical; font-size: .82rem; line-height: 1.5; }
-textarea::placeholder, input::placeholder { color: #a7afa0; }
+textarea { display: block; padding: 12px 13px; border-color: #bdccba; color: #2d4331; background: #fefffb; resize: vertical; font-family: Georgia, serif; font-size: .96rem; font-weight: 500; line-height: 1.5; }
+textarea::placeholder, input::placeholder { color: #8e9c8b; }
 .editor-actions { display: flex; align-items: center; justify-content: space-between; gap: 12px; margin-top: 14px; }
 .primary-button { display: inline-flex; justify-content: center; align-items: center; gap: 14px; min-height: 41px; padding: 10px 16px; border: 0; border-radius: 9px; color: white; background: var(--leaf-dark); box-shadow: 0 3px 0 #123c1e; font-size: .77rem; font-weight: 800; transition: transform .15s, box-shadow .15s, opacity .15s; }
 .primary-button:hover:not(:disabled) { transform: translateY(-1px); box-shadow: 0 4px 0 #123c1e; }
@@ -128,7 +132,7 @@ footer { display: flex; justify-content: space-between; margin: 21px 4px 0; colo
   .grid-and-notes { grid-template-columns: 1fr; gap: 19px; }
   .grid-column { justify-self: center; }
   .year-notes { min-height: 0; padding: 18px 0 0; border-top: 1px dashed #d9e0d2; border-left: 0; }
-  .notes-list { max-height: 235px; }
+  .notes-list { max-height: 275px; }
 }
 @media (max-width: 620px) {
   .app-shell { width: calc(100% - 24px); padding-top: 24px; }
@@ -141,8 +145,8 @@ footer { display: flex; justify-content: space-between; margin: 21px 4px 0; colo
   .welcome-strip span:not(.sun-mark) { display: none; }
   .today-link { white-space: nowrap; }
   .year-card { padding: 17px 13px 13px; border-radius: 13px; }
-  .year-grid { grid-template-columns: 24px repeat(12, 16px); gap: 2px; }
-  .day-cell { width: 16px; height: 16px; border-radius: 3px; }
+  .year-grid { grid-template-columns: 26px repeat(12, 20px); gap: 2px; }
+  .day-cell { width: 20px; height: 20px; border-radius: 3px; }
   .month-label { font-size: .5rem; }
   .grid-caption { text-align: center; font-size: .67rem; }
   .side-panel { display: block; border-radius: 13px; }
