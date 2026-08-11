@@ -5,8 +5,8 @@ import { friendlyDate, isoDate, MONTHS, daysInMonth } from "@/lib/dates";
 import type { DashboardData, DayEntry, Profile } from "@/lib/types";
 
 const SCORE_COLORS = [
-  "#ff0000", "#ff9900", "#fff2cc", "#ffd966", "#bf9000",
-  "#b6d7a8", "#6aa84f", "#38761d", "#274e13", "#00ff00",
+  "#ff0000", "#ff7a1a", "#ff9d27", "#ffd85a", "#f7e8a7",
+  "#c4dca9", "#97c776", "#68a94e", "#3d7d30", "#00ff00",
 ];
 
 const TODAY = new Date();
