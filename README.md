@@ -1,4 +1,4 @@
-# Rate My Day
+# Rate My Day (Website: https://rate-my-day-omega.vercel.app/)
 
 A private, installable year-at-a-glance diary. Pick a 1–10 score for each day, add a note if you want to remember it, and see the year fill with colour.
 
